@@ -1,0 +1,6 @@
+{
+  "name": "looplens",
+  "version": "0.1.0",
+  "description": "LoopLens — sends session cost, token, and activity data to the LoopLens analytics dashboard",
+  "hooks": ["./hooks"]
+}

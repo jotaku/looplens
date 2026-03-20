@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+html {
+  font-size: 18px;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+:root {
+  --c-bg: #0d1117;
+  --c-surface: #161b22;
+  --c-surface2: #21262d;
+  --c-border: #30363d;
+  --c-text: #e6edf3;
+  --c-text2: #8b949e;
+  --c-accent: #58a6ff;
+  --c-green: #3fb950;
+  --c-red: #f85149;
+  --c-yellow: #d29922;
+  --c-purple: #bc8cff;
+  --c-orange: #f0883e;
+  --c-cyan: #39d2c0;
+}
+
+.light {
+  --c-bg: #ffffff;
+  --c-surface: #f6f8fa;
+  --c-surface2: #eaeef2;
+  --c-border: #d0d7de;
+  --c-text: #1f2328;
+  --c-text2: #656d76;
+  --c-accent: #0969da;
+  --c-green: #1a7f37;
+  --c-red: #cf222e;
+  --c-yellow: #9a6700;
+  --c-purple: #8250df;
+  --c-orange: #bc4c00;
+  --c-cyan: #0e8a7e;
+}
+
+@theme {
+  --color-bg: var(--c-bg);
+  --color-surface: var(--c-surface);
+  --color-surface2: var(--c-surface2);
+  --color-border: var(--c-border);
+  --color-text: var(--c-text);
+  --color-text2: var(--c-text2);
+  --color-accent: var(--c-accent);
+  --color-green: var(--c-green);
+  --color-red: var(--c-red);
+  --color-yellow: var(--c-yellow);
+  --color-purple: var(--c-purple);
+  --color-orange: var(--c-orange);
+  --color-cyan: var(--c-cyan);
+}

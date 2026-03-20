@@ -1,0 +1,57 @@
+{
+  "SessionStart": [
+    {
+      "hooks": [
+        {
+          "type": "http",
+          "url": "http://localhost:4244/api/ingest/hook",
+          "timeout": 3000
+        }
+      ]
+    }
+  ],
+  "PostToolUse": [
+    {
+      "hooks": [
+        {
+          "type": "http",
+          "url": "http://localhost:4244/api/ingest/hook",
+          "timeout": 3000
+        }
+      ]
+    }
+  ],
+  "Stop": [
+    {
+      "hooks": [
+        {
+          "type": "http",
+          "url": "http://localhost:4244/api/ingest/hook",
+          "timeout": 3000
+        }
+      ]
+    }
+  ],
+  "StopFailure": [
+    {
+      "hooks": [
+        {
+          "type": "http",
+          "url": "http://localhost:4244/api/ingest/hook",
+          "timeout": 3000
+        }
+      ]
+    }
+  ],
+  "SessionEnd": [
+    {
+      "hooks": [
+        {
+          "type": "http",
+          "url": "http://localhost:4244/api/ingest/hook",
+          "timeout": 5000
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "name": "looplens",
+  "version": "0.1.0",
+  "description": "Real-time observability dashboard for Claude Code sessions — track costs, tokens, tools, models, commits, and quality signals.",
+  "author": "jotaku",
+  "license": "MIT",
+  "type": "module",
+  "keywords": [
+    "claude-code",
+    "analytics",
+    "observability",
+    "ai-agents",
+    "developer-tools"
+  ],
+  "scripts": {
+    "dev": "vite --port 3001",
+    "dev:server": "tsx watch server/index.ts",
+    "build": "tsc --noEmit && vite build",
+    "build:server": "tsc -p tsconfig.server.json",
+    "preview": "vite preview",
+    "start": "tsx server/index.ts",
+    "prod": "npm run build && tsx server/index.ts",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.64.0",
+    "better-sqlite3": "^11.7.0",
+    "express": "^5.1.0",
+    "lucide-react": "^0.577.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "wouter": "^3.7.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.0.0",
+    "@types/better-sqlite3": "^7.6.12",
+    "@types/express": "^5.0.2",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.4.0",
+    "tailwindcss": "^4.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.8.2",
+    "vite": "^6.0.0",
+    "vitest": "^4.1.0"
+  }
+}
