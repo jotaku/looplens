@@ -5,6 +5,16 @@
   "author": "jotaku",
   "license": "MIT",
   "type": "module",
+  "bin": {
+    "looplens": "dist-server/cli/index.js"
+  },
+  "files": [
+    "dist/",
+    "dist-server/",
+    "plugin/",
+    "README.md",
+    "LICENSE"
+  ],
   "keywords": [
     "claude-code",
     "analytics",
@@ -21,7 +31,8 @@
     "start": "tsx server/index.ts",
     "prod": "npm run build && tsx server/index.ts",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run build && npm run build:server"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.64.0",
@@ -44,5 +55,8 @@
     "typescript": "^5.8.2",
     "vite": "^6.0.0",
     "vitest": "^4.1.0"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }

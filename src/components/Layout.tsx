@@ -31,7 +31,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       {/* Sidebar */}
       <aside className="w-56 flex-shrink-0 bg-surface border-r border-border flex flex-col">
         <div className="py-4 border-b border-border flex justify-center">
-          <img src="/docs/images/logo.png" alt="LoopLens" className="h-20 max-w-full px-2" />
+          <img src="/logo.png" alt="LoopLens" className="h-20 max-w-full px-2" />
         </div>
         <nav className="flex-1 py-2">
           {NAV_ITEMS.map((item) => {
