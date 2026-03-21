@@ -73,21 +73,41 @@ Each session includes:
 
 ## Quick Start
 
-### Prerequisites
-
-- Node.js 18+
-- Claude Code installed and configured
-
-### 1. Install dependencies
+### Option A: npm (recommended)
 
 ```bash
-cd looplens
-npm install
+# Install globally
+npm install -g looplens
+
+# Set up Claude Code hooks & statusline
+looplens install
+
+# Start the dashboard
+looplens
 ```
 
-### 2. Install the Claude Code plugin
+Or run directly without installing:
 
-Add these hooks to `~/.claude/settings.json`:
+```bash
+npx looplens
+```
+
+Open **http://localhost:4244** — that's it!
+
+### Option B: From source
+
+```bash
+git clone https://github.com/jotaku/looplens.git
+cd looplens
+npm install
+npm run prod
+```
+
+### Setting up Claude Code integration
+
+If you used `looplens install`, hooks and statusline are configured automatically.
+
+For **manual setup**, add these hooks to `~/.claude/settings.json`:
 
 ```json
 {
@@ -135,28 +155,6 @@ For real-time cost/token data, add the statusline:
   }
 }
 ```
-
-### 3. Run LoopLens
-
-**Production** (single command — builds frontend and starts server):
-
-```bash
-npm run prod
-```
-
-Open **http://localhost:4244** — the server serves both the API and the built dashboard.
-
-**Development** (separate terminals with hot-reload):
-
-```bash
-# Terminal 1: Backend with auto-reload
-npm run dev:server
-
-# Terminal 2: Frontend with HMR
-npm run dev
-```
-
-Frontend at **http://localhost:3001**, API at **http://localhost:4244**.
 
 ---
 

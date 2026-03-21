@@ -9,7 +9,8 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "outDir": "dist-server",
-    "rootDir": "server"
+    "rootDir": "."
   },
-  "include": ["server"]
+  "include": ["server", "cli"],
+  "exclude": ["server/__tests__"]
 }

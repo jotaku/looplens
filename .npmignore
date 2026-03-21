@@ -1,0 +1,23 @@
+# Source (compiled output is in dist-server/)
+src/
+server/
+cli/
+
+# Dev/build configs
+.github/
+docs/
+tsconfig.json
+tsconfig.server.json
+vite.config.ts
+index.html
+CONTRIBUTING.md
+TECHNICAL.md
+PITCH.md
+
+# Dev files
+*.db
+*.db-wal
+*.db-shm
+.env
+.DS_Store
+node_modules/

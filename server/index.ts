@@ -58,7 +58,9 @@ app.post('/api/backfill', (_req, res) => {
 });
 
 // Serve built frontend in production
-const distDir = resolve(import.meta.dirname ?? __dirname, '..', 'dist');
+// LOOPLENS_ROOT is set by the CLI; fallback for dev mode (tsx from server/)
+const packageRoot = process.env.LOOPLENS_ROOT ?? resolve(import.meta.dirname ?? __dirname, '..');
+const distDir = resolve(packageRoot, 'dist');
 if (existsSync(distDir)) {
   app.use(express.static(distDir));
   // SPA fallback — exclude /api paths so they get proper 404s

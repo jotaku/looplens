@@ -1,11 +1,24 @@
-import { existsSync, mkdirSync, cpSync, readFileSync, writeFileSync, rmSync } from 'node:fs';
-import { join, resolve } from 'node:path';
+import { existsSync, mkdirSync, cpSync, readFileSync, writeFileSync, rmSync, chmodSync } from 'node:fs';
+import { join, resolve, dirname } from 'node:path';
 import { homedir } from 'node:os';
+import { fileURLToPath } from 'node:url';
+
+const __dir = import.meta.dirname ?? dirname(fileURLToPath(import.meta.url));
+
+/** Walk up from current file to find the package root (where package.json lives). */
+function findPackageRoot(): string {
+  let dir = __dir;
+  for (let i = 0; i < 5; i++) {
+    if (existsSync(resolve(dir, 'package.json'))) return dir;
+    dir = resolve(dir, '..');
+  }
+  return process.cwd();
+}
 
 const CLAUDE_DIR = join(homedir(), '.claude');
 const PLUGIN_DEST = join(CLAUDE_DIR, 'plugins', 'looplens');
 const SETTINGS_PATH = join(CLAUDE_DIR, 'settings.json');
-const PLUGIN_SRC = resolve(import.meta.dirname ?? __dirname, '..', 'plugin');
+const PLUGIN_SRC = resolve(process.env.LOOPLENS_ROOT ?? findPackageRoot(), 'plugin');
 
 export function installPlugin(): { installed: boolean; message: string } {
   try {
@@ -18,12 +31,11 @@ export function installPlugin(): { installed: boolean; message: string } {
     }
     cpSync(PLUGIN_SRC, PLUGIN_DEST, { recursive: true });
 
-    // Make statusline script executable
+    // Make scripts executable
     const statuslinePath = join(PLUGIN_DEST, 'scripts', 'statusline.sh');
-    if (existsSync(statuslinePath)) {
-      const { chmodSync } = require('node:fs');
-      chmodSync(statuslinePath, 0o755);
-    }
+    if (existsSync(statuslinePath)) chmodSync(statuslinePath, 0o755);
+    const hookRelayPath = join(PLUGIN_DEST, 'scripts', 'hook-relay.sh');
+    if (existsSync(hookRelayPath)) chmodSync(hookRelayPath, 0o755);
 
     // Update ~/.claude/settings.json to add statusline
     let settings: Record<string, unknown> = {};
