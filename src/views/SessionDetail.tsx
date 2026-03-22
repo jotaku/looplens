@@ -173,7 +173,7 @@ export function SessionDetail({ id }: { id: string }) {
               <div className="text-[10px] uppercase tracking-wider text-text2 mb-0.5">Efficiency</div>
               {q.costPerLine != null ? (
                 <span className="text-xs font-medium text-yellow tabular-nums">
-                  ${(q.costPerLine * 100).toFixed(2)}¢/line
+                  {(q.costPerLine * 100).toFixed(2)}¢/line
                 </span>
               ) : (
                 <span className="text-xs text-text2">No lines changed</span>
