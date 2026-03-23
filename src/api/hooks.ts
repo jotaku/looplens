@@ -30,6 +30,7 @@ export function useTranscript(sessionId: string) {
   return useQuery({
     queryKey: ['transcript', sessionId],
     queryFn: () => api.getTranscript(sessionId),
+    refetchInterval: 10000,
     enabled: !!sessionId,
   });
 }
