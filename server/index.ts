@@ -73,11 +73,14 @@ if (existsSync(distDir)) {
 getDb();
 
 const server = app.listen(PORT, HOST, () => {
+  const url = `http://${HOST}:${PORT}`;
+  const W = 43;
+  const pad = (s: string) => s + ' '.repeat(Math.max(0, W - s.length));
   console.log('');
-  console.log('  ╔═══════════════════════════════════════════╗');
-  console.log('  ║   LoopLens                                ║');
-  console.log(`  ║   http://${HOST}:${PORT}                    ║`);
-  console.log('  ╚═══════════════════════════════════════════╝');
+  console.log(`  ╔${'═'.repeat(W)}╗`);
+  console.log(`  ║${pad('   LoopLens')}║`);
+  console.log(`  ║${pad('   ' + url)}║`);
+  console.log(`  ╚${'═'.repeat(W)}╝`);
   console.log('');
   console.log('  Waiting for data from Claude Code plugin...');
   console.log('  Press Ctrl+C to stop.');
