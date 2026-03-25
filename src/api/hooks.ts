@@ -50,3 +50,11 @@ export function useCommits(page = 1, limit = 50) {
     refetchInterval: 10000,
   });
 }
+
+export function useInsightsStatus() {
+  return useQuery({
+    queryKey: ['insights-status'],
+    queryFn: () => api.getInsightsStatus(),
+    refetchInterval: 5000,
+  });
+}

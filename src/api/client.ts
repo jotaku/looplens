@@ -44,6 +44,18 @@ export function getQuality() {
   return fetchJSON<QualityResponse>('/api/stats/quality');
 }
 
+export function getInsightsStatus() {
+  return fetchJSON<InsightsStatusResponse>('/api/insights/status');
+}
+
+export function generateInsights() {
+  return postJSON<{ ok: boolean; message: string }>('/api/insights/generate');
+}
+
+export function getInsightsReportUrl() {
+  return `${BASE}/api/insights/report`;
+}
+
 // Types
 
 export interface SessionData {
@@ -177,6 +189,14 @@ export interface TranscriptMessage {
 export interface TranscriptResponse {
   messages: TranscriptMessage[];
   source: string | null;
+}
+
+export interface InsightsStatusResponse {
+  available: boolean;
+  reason?: string;
+  reportExists?: boolean;
+  lastModified?: string;
+  generating?: boolean;
 }
 
 export interface CommitData {

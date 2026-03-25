@@ -8,6 +8,7 @@ import { ToolsPage } from '@/views/ToolsPage';
 import { ModelsPage } from '@/views/ModelsPage';
 import { CommitsPage } from '@/views/CommitsPage';
 import { QualityPage } from '@/views/QualityPage';
+import { InsightsPage } from '@/views/InsightsPage';
 
 export function App() {
   return (
@@ -23,6 +24,7 @@ export function App() {
         <Route path="/models" component={ModelsPage} />
         <Route path="/quality" component={QualityPage} />
         <Route path="/commits" component={CommitsPage} />
+        <Route path="/insights" component={InsightsPage} />
         <Route>
           <div className="text-text2 text-sm py-8">Page not found</div>
         </Route>

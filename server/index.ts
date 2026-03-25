@@ -5,6 +5,7 @@ import { ingestRouter } from './routes/ingest.js';
 import { sessionsRouter } from './routes/sessions.js';
 import { statsRouter } from './routes/stats.js';
 import { commitsRouter } from './routes/commits.js';
+import { insightsRouter } from './routes/insights.js';
 import { clearAll, getSessions } from './store.js';
 import { enrichSessionFromTranscript } from './transcript.js';
 import { getDb, closeDb } from './db.js';
@@ -32,6 +33,7 @@ app.use('/api/ingest', ingestRouter);
 app.use('/api/sessions', sessionsRouter);
 app.use('/api/stats', statsRouter);
 app.use('/api/commits', commitsRouter);
+app.use('/api/insights', insightsRouter);
 
 // Health check
 app.get('/api/health', (_req, res) => {
