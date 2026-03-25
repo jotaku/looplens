@@ -9,6 +9,7 @@ import {
   Layers,
   ShieldCheck,
   GitCommitHorizontal,
+  Sparkles,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
@@ -20,6 +21,7 @@ const NAV_ITEMS: { path: string; label: string; icon: LucideIcon }[] = [
   { path: '/models', label: 'Models', icon: Layers },
   { path: '/quality', label: 'Quality', icon: ShieldCheck },
   { path: '/commits', label: 'Commits', icon: GitCommitHorizontal },
+  { path: '/insights', label: 'Insights', icon: Sparkles },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
