@@ -74,7 +74,7 @@ export function InsightsPage() {
               <span>This will consume tokens from your Claude plan. Generation typically takes 30–60 seconds.</span>
             </div>
             <div className="flex items-center gap-1.5 text-[11px] text-text2 mt-1">
-              <span>macOS only · Requires Claude Code CLI installed</span>
+              <span>Requires Claude Code CLI installed</span>
             </div>
           </div>
         </div>

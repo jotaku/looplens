@@ -3,16 +3,11 @@ import type { Request, Response } from 'express';
 import { execFile } from 'node:child_process';
 import { existsSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
-import { homedir, platform } from 'node:os';
+import { homedir } from 'node:os';
 
 const router = Router();
 
 const REPORT_PATH = join(homedir(), '.claude', 'usage-data', 'report.html');
-
-/** Check if we're on macOS */
-function isMacOS(): boolean {
-  return platform() === 'darwin';
-}
 
 /** Find the claude CLI binary */
 function findClaude(): string | null {
@@ -34,11 +29,6 @@ let lastError: string | null = null;
 
 // GET /api/insights/status — report existence + last modified
 router.get('/status', (_req: Request, res: Response) => {
-  if (!isMacOS()) {
-    res.json({ available: false, reason: 'Insights is only supported on macOS for now.' });
-    return;
-  }
-
   const claudePath = findClaude();
   if (!claudePath) {
     res.json({ available: false, reason: 'Claude Code CLI not found. Install it first.' });
@@ -62,11 +52,6 @@ router.get('/status', (_req: Request, res: Response) => {
 
 // POST /api/insights/generate — run `claude -p "/insights"` in background
 router.post('/generate', (_req: Request, res: Response) => {
-  if (!isMacOS()) {
-    res.status(400).json({ error: 'Insights is only supported on macOS for now.' });
-    return;
-  }
-
   if (generating) {
     res.status(409).json({ error: 'Insights generation is already in progress.' });
     return;
