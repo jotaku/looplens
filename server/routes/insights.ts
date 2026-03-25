@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import type { Request, Response } from 'express';
-import { execFile } from 'node:child_process';
+import { spawn } from 'node:child_process';
 import { existsSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { homedir } from 'node:os';
@@ -66,11 +66,21 @@ router.post('/generate', (_req: Request, res: Response) => {
   generating = true;
   lastError = null;
 
-  execFile(claudePath, ['-p', '/insights', '--output-format', 'json'], { timeout: 120_000 }, (err, stdout, stderr) => {
+  const child = spawn(claudePath, ['-p', '/insights', '--output-format', 'json'], {
+    timeout: 120_000,
+    stdio: ['ignore', 'pipe', 'pipe'],
+  });
+
+  let stdout = '';
+  let stderr = '';
+  child.stdout.on('data', (chunk: Buffer) => { stdout += chunk.toString(); });
+  child.stderr.on('data', (chunk: Buffer) => { stderr += chunk.toString(); });
+
+  child.on('close', (code) => {
     generating = false;
 
-    if (err) {
-      const msg = err.message ?? 'Unknown error';
+    if (code !== 0) {
+      const msg = stderr.trim() || `Process exited with code ${code}`;
       console.error('Insights generation failed:', msg);
       lastError = msg;
       return;
@@ -85,11 +95,17 @@ router.post('/generate', (_req: Request, res: Response) => {
       }
     } catch {
       // Non-JSON output — check stderr
-      if (stderr?.trim()) {
+      if (stderr.trim()) {
         lastError = stderr.trim();
         console.error('Insights stderr:', lastError);
       }
     }
+  });
+
+  child.on('error', (err) => {
+    generating = false;
+    lastError = err.message;
+    console.error('Insights spawn error:', err.message);
   });
 
   // Return immediately — generation runs in background
