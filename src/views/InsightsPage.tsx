@@ -37,10 +37,16 @@ export function InsightsPage() {
       setGenerating(false);
       if (status.lastError) {
         setError(status.lastError);
-      } else if (status.reportExists) {
+      } else {
         setError(null);
-        setIframeKey(k => k + 1);
+        if (status.reportExists) {
+          setIframeKey(k => k + 1);
+        }
       }
+    }
+    // Clear stale error when backend reports no error
+    if (!generating && !isGenerating && status && !status.lastError && error) {
+      setError(null);
     }
   }, [generating, status]);
 
