@@ -197,6 +197,7 @@ export interface InsightsStatusResponse {
   reportExists?: boolean;
   lastModified?: string;
   generating?: boolean;
+  lastError?: string | null;
 }
 
 export interface CommitData {

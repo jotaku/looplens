@@ -30,6 +30,7 @@ function findClaude(): string | null {
 }
 
 let generating = false;
+let lastError: string | null = null;
 
 // GET /api/insights/status — report existence + last modified
 router.get('/status', (_req: Request, res: Response) => {
@@ -55,6 +56,7 @@ router.get('/status', (_req: Request, res: Response) => {
     reportExists,
     lastModified,
     generating,
+    lastError,
   });
 });
 
@@ -77,11 +79,31 @@ router.post('/generate', (_req: Request, res: Response) => {
   }
 
   generating = true;
+  lastError = null;
 
-  execFile(claudePath, ['-p', '/insights'], { timeout: 120_000 }, (err) => {
+  execFile(claudePath, ['-p', '/insights', '--output-format', 'json'], { timeout: 120_000 }, (err, stdout, stderr) => {
     generating = false;
+
     if (err) {
-      console.error('Insights generation failed:', err.message);
+      const msg = err.message ?? 'Unknown error';
+      console.error('Insights generation failed:', msg);
+      lastError = msg;
+      return;
+    }
+
+    // Parse JSON output from claude CLI to detect errors like rate limits
+    try {
+      const result = JSON.parse(stdout);
+      if (result.is_error || result.result?.includes?.('limit')) {
+        lastError = result.result ?? 'Claude Code reported an error during generation.';
+        console.error('Insights CLI error:', lastError);
+      }
+    } catch {
+      // Non-JSON output — check stderr
+      if (stderr?.trim()) {
+        lastError = stderr.trim();
+        console.error('Insights stderr:', lastError);
+      }
     }
   });
 

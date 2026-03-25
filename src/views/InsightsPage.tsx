@@ -30,12 +30,17 @@ export function InsightsPage() {
     }
   };
 
-  // Stop local generating state when backend finishes
+  // Stop local generating state when backend finishes (success or failure)
   const isGenerating = generating || (status?.generating ?? false);
   useEffect(() => {
-    if (generating && status && !status.generating && status.reportExists) {
+    if (generating && status && !status.generating) {
       setGenerating(false);
-      setIframeKey(k => k + 1);
+      if (status.lastError) {
+        setError(status.lastError);
+      } else if (status.reportExists) {
+        setError(null);
+        setIframeKey(k => k + 1);
+      }
     }
   }, [generating, status]);
 
@@ -127,9 +132,18 @@ export function InsightsPage() {
         </div>
       )}
 
-      {error && (
-        <div className="bg-surface border border-red/30 rounded-lg p-3 mb-6 text-red text-sm">
-          {error}
+      {(error || (!isGenerating && status?.lastError)) && (
+        <div className="bg-surface border border-red/30 rounded-lg p-4 mb-6">
+          <div className="flex items-start gap-2.5">
+            <AlertTriangle className="w-4 h-4 text-red flex-shrink-0 mt-0.5" />
+            <div>
+              <p className="text-sm text-red font-medium mb-1">Generation failed</p>
+              <p className="text-xs text-text2">{error || status?.lastError}</p>
+              {status?.reportExists && (
+                <p className="text-[11px] text-text2 mt-1">Showing the last successfully generated report below.</p>
+              )}
+            </div>
+          </div>
         </div>
       )}
 
@@ -142,7 +156,7 @@ export function InsightsPage() {
         </div>
       )}
 
-      {/* Report iframe */}
+      {/* Report iframe — show even after errors so user sees last report */}
       {!isGenerating && status?.reportExists && (
         <div className="bg-surface border border-border rounded-lg overflow-hidden">
           <iframe
