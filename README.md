@@ -24,6 +24,7 @@
 | <img width="16" src="https://lucide.dev/api/icons/layers"> **Models** | Model usage breakdown with cost and token stats |
 | <img width="16" src="https://lucide.dev/api/icons/shield-check"> **Quality** | Completion rate, tool error rate, cost/line efficiency, tokens/line, per-session quality table |
 | <img width="16" src="https://lucide.dev/api/icons/git-commit-horizontal"> **Commits** | Claude Code git commits with agent breakdown (cost, tokens per session), linked to sessions |
+| <img width="16" src="https://lucide.dev/api/icons/sparkles"> **Insights** *(experimental)* | AI-powered usage analysis — generates a comprehensive HTML report via Claude Code's `/insights` skill |
 
 ### Session Detail
 
@@ -36,6 +37,15 @@ Each session includes:
 - Event timeline
 - Session summary (last assistant message)
 - **Full conversation transcript** (read from Claude Code's JSONL transcripts)
+
+### Insights (Experimental)
+
+The Insights page uses the Claude Code CLI to generate an AI-powered analysis of your usage history. Click **Generate Insights** to produce a detailed HTML report covering usage patterns, cost breakdowns, and recommendations.
+
+- Requires the **Claude Code CLI** installed on your system
+- Generation takes **30–60 seconds** and consumes tokens from your Claude plan
+- Report is saved to `~/.claude/usage-data/report.html` and displayed in the dashboard
+- Previous reports remain viewable while a new one generates
 
 ### Additional Features
 
@@ -177,6 +187,14 @@ For real-time cost/token data, add the statusline:
 | `GET` | `/api/sessions/:id` | Session detail + events + quality signals |
 | `GET` | `/api/sessions/:id/transcript` | Conversation transcript from Claude Code JSONL |
 | `GET` | `/api/commits?page=N&limit=N` | Claude Code git commits correlated with sessions |
+
+### Insights
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/api/insights/status` | Check CLI availability, report existence, generation state |
+| `POST` | `/api/insights/generate` | Start AI-powered insights report generation |
+| `GET` | `/api/insights/report` | Serve the generated HTML report |
 
 ### Management
 
